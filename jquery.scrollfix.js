@@ -18,10 +18,10 @@
             conditionCallback: function(event, $element) {
                 return $element.is(":visible");
             }, // the condition to determine if scrolling is enabled/disabled, returning true enables & returning false disables
-            beforeEnabledCallback: function() { }, // called before document scrolling has been disabled
-            afterEnabledCallback: function() { }, // called after document scrolling has been disabled
-            beforeDisabledCallback: function() { }, // called before document scrolling has been re-enabled
-            afterDisabledCallback: function() { } // called after document scrolling has been re-enabled
+            beforeEnabledCallback: function($element) { }, // called before document scrolling has been disabled
+            afterEnabledCallback: function($element) { }, // called after document scrolling has been disabled
+            beforeDisabledCallback: function($element) { }, // called before document scrolling has been re-enabled
+            afterDisabledCallback: function($element) { } // called after document scrolling has been re-enabled
         };
 
     // here we go!
@@ -54,7 +54,7 @@
         // disables scrolling on the document
         plugin.enable = function() {
             // before enabled callback
-            plugin.settings.beforeEnabledCallback();
+            plugin.settings.beforeEnabledCallback($element);
 
             // disable scrolling
             $body.css({ "overflow": "hidden" });
@@ -63,20 +63,20 @@
             });
 
             // after enabled callback
-            plugin.settings.afterEnabledCallback();
+            plugin.settings.afterEnabledCallback($element);
         };
 
         // re-enables scrolling on the document
         plugin.disable = function() {
             // before disabled callback
-            plugin.settings.beforeDisabledCallback();
+            plugin.settings.beforeDisabledCallback($element);
 
             // re-enable scrolling
             $body.css({ "overflow": "" });
             $document.unbind("touchmove");
 
             // after disabled callback
-            plugin.settings.afterDisabledCallback();
+            plugin.settings.afterDisabledCallback($element);
         };
 
         /*
